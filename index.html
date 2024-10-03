@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Présentation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #1a1a1a;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+        }
+        .presentation-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 1600px;
+            margin: 20px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .presentation-container {
+            position: relative;
+            width: 100%;
+            max-width: 1600px;
+            height: 800px;
+            resize: both;
+            overflow: auto;
+            min-width: 600px;
+            min-height: 400px;
+            border: 2px solid #4a4a4a;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            background-color: #2a2a2a;
+        }
+        .blob-container {
+            padding: 40px;
+            width: 100%;
+            height: 100%;
+            min-height: 400px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            transition: background-image 0.5s ease-in-out;
+        }
+        .content-wrapper {
+            color: white;
+            width: 50%;
+            text-align: left;
+            z-index: 10;
+        }
+        .slide-title {
+            font-weight: 600;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: #cccccc;
+        }
+        .slide-content {
+            font-weight: 300;
+            font-size: 1.5rem;
+            line-height: 1.6;
+        }
+        .slide-image-container {
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+        .slide-image {
+            width: 100%;
+            max-width: 100%;
+            border-radius: 15px;
+            display: block;
+            object-fit: cover;
+        }
+        .btn-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            background-color: rgba(255, 255, 255, 0.2);
+            border: none;
+            padding: 10px 15px;
+            transition: background-color 0.3s ease;
+        }
+        .btn-nav:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        .btn-left {
+            left: -50px;
+        }
+        .btn-right {
+            right: -50px;
+        }
+        .size-info {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8em;
+        }
+
+        /* Custom styles for slide 6 */
+        .slide-6 .slide-image-container {
+            overflow-y: auto;
+            max-height: 100%;
+            padding-right: 10px;
+        }
+        .slide-6 .slide-image {
+            margin-bottom: 20px;
+        }
+        .slide-6 .slide-image:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Scrollbar styles for slide 6 */
+        .slide-6 .slide-image-container::-webkit-scrollbar {
+            width: 10px;
+        }
+        .slide-6 .slide-image-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 5px;
+        }
+        .slide-6 .slide-image-container::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 5px;
+        }
+        .slide-6 .slide-image-container::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+        .slide-4 .slide-image{
+            height: auto;
+            width: auto;
+        }
+
+        /* Added padding for slides 7, 8, and 10 */
+        .slide-7 .blob-container,
+        .slide-8 .blob-container,
+        .slide-5 .blob-container, 
+        .slide-6 .blob-container, 
+        .slide-12 .blob-container, 
+        .slide-10 .blob-container {
+            padding: 40px 60px;
+        }
+        .slide-7 .content-wrapper,
+        .slide-8 .content-wrapper,
+        .slide-5 .blob-container, 
+        .slide-6 .blob-container, 
+        .slide-12 .blob-container, 
+        .slide-10 .content-wrapper {
+            padding-right: 40px;
+        }
+
+        /* New styles to add space between images and text */
+        .blob-container {
+            gap: 40px; /* Adds space between content-wrapper and slide-image-container */
+        }
+        .slide-image-container {
+            padding-left: 20px; /* Adds extra space to the left of images */
+        }
+
+    </style>
+</head>
+<body>
+    <div class="presentation-wrapper">
+        <button id="prev-btn" class="btn btn-primary btn-nav btn-left"><i class='bx bxs-left-arrow'></i></button>
+        <div class="presentation-container">
+            <div class="blob-container" id="blob-container">
+                <div class="content-wrapper">
+                    <h1 id="slide-title" class="slide-title">Introduction</h1>
+                    <div id="slide-content" class="slide-content"></div>
+                </div>
+                <div id="slide-images" class="slide-image-container" style="display: none;"></div>
+            </div>
+            <div class="size-info"></div>
+        </div>
+        <button id="next-btn" class="btn btn-primary btn-nav btn-right"><i class='bx bxs-right-arrow'></i></button>
+    </div>
+
+    <script>
+const slides = [
+    {
+        title: "The Dark Web: Myths, Realities, and Cybersecurity Risks",
+        content: `
+            <p>A <strong>Deep Dive</strong> into the Hidden Internet.</p>
+            <p><em>Presented by:</em> AbdRRahmane & Hatim</p>
+        `,
+        background: "1.svg",
+        images: ["1.jpg"]
+    },
+    {
+        title: "Introduction: What is the Dark Web?",
+        content: `
+            <p>The Dark Web is a hidden part of the internet that is not indexed by traditional search engines. It is:</p>
+            <ul>
+                <li><strong>Accessible only</strong> via specific software like Tor.</li>
+                <li><strong>Composed</strong> of sites and services requiring anonymity and privacy.</li>
+            </ul>
+        `,
+        background: "2.svg",
+        images: ["2.avif"]
+    },
+    {
+        title: "The Layers of the Web",
+        content: `
+            <p>The internet is divided into different layers:</p>
+            <ul>
+                <li><strong>Surface Web:</strong> Accessible via traditional browsers.</li>
+                <li><strong>Deep Web:</strong> Unindexed content like private databases.</li>
+                <li><strong>Dark Web:</strong> Requires special tools like Tor, known for both legal and illegal activities.</li>
+            </ul>
+        `,
+        background: "3.svg",
+        images: ["3.png"]
+    },
+    {
+        title: "Common Myths about the Dark Web",
+        content: `
+            <ul>
+                <li><strong>Myth:</strong> It's entirely illegal.</li>
+                <li><strong>Reality:</strong> There are many legitimate uses for privacy-focused communication.</li>
+                <li><strong>Myth:</strong> Dark Web and Deep Web are the same.</li>
+                <li><strong>Reality:</strong> The Dark Web is a small part of the Deep Web.</li>
+            </ul>
+        `,
+        background: "4.svg",
+        images: ["4.jpg"]
+    },
+    {
+        title: "Realities of the Dark Web",
+        content: `
+            <p>The Dark Web offers:</p>
+            <ul>
+                <li><strong>Privacy</strong> for legitimate uses, like secure communication for journalists and activists.</li>
+                <li><strong>Criminal activities</strong> involving illegal transactions, though these make up a fraction of the content.</li>
+            </ul>
+            <p>Despite its notoriety, not all activities are illegal.</p>
+        `,
+        background: "5.svg",
+        images: ["5.jpg"]
+    },
+    {
+        title: "Famous Dark Web Cases",
+        content: `
+            <ul>
+                <li><strong>Silk Road</strong> and <strong>AlphaBay:</strong> Notorious marketplaces for illicit goods.</li>
+                <li><strong>Wikileaks:</strong> Uses dark web resources to protect whistleblowers.</li>
+            </ul>
+        `,
+        background: "6.svg",
+        images: ["6-2.png", "6.png", "6-1.png"]
+    },
+    {
+        title: "The Dark Web's Role in Cybersecurity",
+        content: `
+            <p>The Dark Web is a hub for:</p>
+            <ul>
+                <li><strong>Ransomware, stolen data, exploit kits, and phishing kits</strong> traded in underground markets.</li>
+                <li><strong>Cybercriminals</strong> leverage these tools to target individuals and organizations.</li>
+            </ul>
+        `,
+        background: "7.svg",
+        images: ["7.webp"]
+    },
+    {
+        title: "Cybersecurity Risks on the Dark Web",
+        content: `
+            <p>Some key risks emerging from the Dark Web:</p>
+            <ul>
+                <li><strong>Identity theft</strong> and personal data leaks.</li>
+                <li><strong>Corporate data breaches</strong> being sold or exposed.</li>
+                <li><strong>Cyberterrorism</strong> threats monitored by cybersecurity firms.</li>
+            </ul>
+        `,
+        background: "8.svg",
+        images: ["8.png"]
+    },
+    {
+        title: "How to Access the Dark Web",
+        content: `
+            <p>The Dark Web can be accessed through various tools:</p>
+            <ul>
+                <li><strong>Tor, I2P,</strong> and <strong>Freenet</strong> enable anonymous browsing.</li>
+            </ul>
+            <p><strong>Risks:</strong> Legal consequences and exposure to malware if proper precautions are not taken.</p>
+        `,
+        background: "9.svg",
+        images: ["9.png"]
+    },
+    {
+        title: "Safety Measures for Exploring the Dark Web",
+        content: `
+            <p>To stay safe on the Dark Web, follow these steps:</p>
+            <ul>
+                <li><strong>Use a VPN</strong> to hide your IP address.</li>
+                <li><strong>Isolate activity</strong> on a separate device.</li>
+                <li><strong>Avoid sharing personal information</strong> and stay within legal boundaries.</li>
+            </ul>
+        `,
+        background: "10.svg",
+        images: ["10.jpg", "10-1.jpg"]
+    },
+    {
+        title: "The Future of the Dark Web",
+        content: `
+            <p>Looking ahead, the Dark Web will face challenges:</p>
+            <ul>
+                <li><strong>Law enforcement</strong> is developing methods to track illegal activities.</li>
+                <li><strong>Blockchain and cryptocurrencies</strong> complicate tracing transactions.</li>
+                <li><strong>Cybersecurity threats</strong> continue to evolve, demanding constant vigilance.</li>
+            </ul>
+        `,
+        background: "11.svg",
+        images: ["11.png"]
+    },
+    {
+        title: "Conclusion",
+        content: `
+            <p>The Dark Web has both <strong>legitimate uses</strong> and <strong>significant risks</strong>.</p>
+            <p>Cybersecurity monitoring is crucial to protect data, and privacy remains central to internet freedom.</p>
+        `,
+        background: "12.svg",
+        images: ["12.jpg"]
+    },
+    {
+        title: "Q&A",
+        content: `
+            <p><strong>Questions and Answers Session.</strong></p>
+        `,
+        background: "13.svg",
+        images: ["14.png"]
+    }
+];
+
+
+ let currentSlideIndex = 0;
+
+function updateSlide() {
+    const currentSlide = slides[currentSlideIndex];
+    const blobContainer = document.getElementById("blob-container");
+
+    // Remove previous slide classes
+    blobContainer.className = 'blob-container';
+    
+    // Add current slide class
+    blobContainer.classList.add(`slide-${currentSlideIndex + 1}`);
+
+    // Update the slide title
+    document.getElementById("slide-title").textContent = currentSlide.title;
+
+    // Use innerHTML for all slides to allow embedded HTML content
+    document.getElementById("slide-content").innerHTML = currentSlide.content;
+
+    // Update the background image
+    blobContainer.style.backgroundImage = `url('${currentSlide.background}')`;
+
+    // Handle slide images
+    const slideImagesContainer = document.getElementById("slide-images");
+    slideImagesContainer.innerHTML = ''; // Clear previous images
+
+    if (currentSlide.images && currentSlide.images.length > 0) {
+        slideImagesContainer.style.display = 'flex';
+        currentSlide.images.forEach(imageSrc => {
+            const img = document.createElement('img');
+            img.src = imageSrc;
+            img.alt = "Slide image";
+            img.className = "slide-image";
+            slideImagesContainer.appendChild(img);
+        });
+    } else {
+        slideImagesContainer.style.display = 'none';
+    }
+
+    // Update the size info for the current slide
+    document.querySelector('.size-info').textContent = `Slide ${currentSlideIndex + 1} of ${slides.length}`;
+}
+
+// Next and previous buttons functionality
+document.getElementById("next-btn").addEventListener("click", () => {
+    currentSlideIndex = (currentSlideIndex + 1) % slides.length;
+    updateSlide();
+});
+
+document.getElementById("prev-btn").addEventListener("click", () => {
+    currentSlideIndex = (currentSlideIndex - 1 + slides.length) % slides.length;
+    updateSlide();
+});
+
+// Initialize the first slide
+updateSlide();
+
+    </script>
+</body>
+</html>
