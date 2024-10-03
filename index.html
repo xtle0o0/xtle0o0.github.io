@@ -406,8 +406,6 @@ updateSlide();
     </script>
 
     
-
-
 <script>
         let touchStartX = 0;
 let touchEndX = 0;
@@ -415,11 +413,11 @@ let touchEndX = 0;
 function handleSwipe() {
     if (touchEndX < touchStartX) {
         // Swipe left
-        currentSlide = (currentSlide + 1) % slides.length;
+        currentSlideIndex = (currentSlideIndex + 1) % slides.length;
     }
     if (touchEndX > touchStartX) {
         // Swipe right
-        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        currentSlideIndex = (currentSlideIndex - 1 + slides.length) % slides.length;
     }
     updateSlide();
 }
@@ -436,5 +434,7 @@ document.getElementById('blob-container').addEventListener('touchend', event => 
 });
 
 </script>
+
+
 </body>
 </html>
