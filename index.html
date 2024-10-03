@@ -404,5 +404,98 @@ document.getElementById("prev-btn").addEventListener("click", () => {
 updateSlide();
 
     </script>
+
+    
+
+
+<script>
+
+let currentSlideIndex = 0;
+
+// Variables to track touch start position
+let touchStartX = 0;
+let touchEndX = 0;
+
+// Update the slide function (existing)
+function updateSlide() {
+    const currentSlide = slides[currentSlideIndex];
+    const blobContainer = document.getElementById("blob-container");
+
+    // Remove previous slide classes
+    blobContainer.className = 'blob-container';
+    
+    // Add current slide class
+    blobContainer.classList.add(`slide-${currentSlideIndex + 1}`);
+
+    // Update the slide title
+    document.getElementById("slide-title").textContent = currentSlide.title;
+
+    // Use innerHTML for all slides to allow embedded HTML content
+    document.getElementById("slide-content").innerHTML = currentSlide.content;
+
+    // Update the background image
+    blobContainer.style.backgroundImage = `url('${currentSlide.background}')`;
+
+    // Handle slide images
+    const slideImagesContainer = document.getElementById("slide-images");
+    slideImagesContainer.innerHTML = ''; // Clear previous images
+
+    if (currentSlide.images && currentSlide.images.length > 0) {
+        slideImagesContainer.style.display = 'flex';
+        currentSlide.images.forEach(imageSrc => {
+            const img = document.createElement('img');
+            img.src = imageSrc;
+            img.alt = "Slide image";
+            img.className = "slide-image";
+            slideImagesContainer.appendChild(img);
+        });
+    } else {
+        slideImagesContainer.style.display = 'none';
+    }
+
+    // Update the size info for the current slide
+    document.querySelector('.size-info').textContent = `Slide ${currentSlideIndex + 1} of ${slides.length}`;
+}
+
+// Next and previous buttons functionality
+document.getElementById("next-btn").addEventListener("click", () => {
+    currentSlideIndex = (currentSlideIndex + 1) % slides.length;
+    updateSlide();
+});
+
+document.getElementById("prev-btn").addEventListener("click", () => {
+    currentSlideIndex = (currentSlideIndex - 1 + slides.length) % slides.length;
+    updateSlide();
+});
+
+// Touch event listeners
+const presentationContainer = document.querySelector('.presentation-container');
+
+presentationContainer.addEventListener('touchstart', (event) => {
+    touchStartX = event.changedTouches[0].screenX;
+});
+
+presentationContainer.addEventListener('touchend', (event) => {
+    touchEndX = event.changedTouches[0].screenX;
+    handleGesture();
+});
+
+// Function to handle gesture
+function handleGesture() {
+    if (touchEndX < touchStartX) {
+        // Swipe left
+        currentSlideIndex = (currentSlideIndex + 1) % slides.length;
+    } else if (touchEndX > touchStartX) {
+        // Swipe right
+        currentSlideIndex = (currentSlideIndex - 1 + slides.length) % slides.length;
+    }
+    updateSlide();
+}
+
+// Initialize the first slide
+updateSlide();
+
+
+</script>
 </body>
 </html>
